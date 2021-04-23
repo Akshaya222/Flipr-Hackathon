@@ -1,33 +1,13 @@
-const {createUser, updateUser, findUserByEmail} = require('../dbServices/user');
+const {successHandler, errorHandler} =  require('../helpers/responseHandler');
 
-exports.register = async (req, res) => {
-    try {
-        const user = await createUser(req.body);
-        res.status(200).json({message: 'User registered', data: user});
-    } catch (e) {
-        res.status(400).json({message: e.message});
-    }
-};
+exports.sendOTP = async (req, res) => {
+    try{
 
-exports.login = async (req, res) => {
-    try {
-        const {email, password} = req.body;
-        const user = await findUserByEmail(email);
-        if (! user) {
-            res.status(401).json({message: "No such user"});
-            return;
-        }
-        // match user password
-        const matched = await user.matchPassword(password, user.password);
-        if (! matched) {
-            res.status(401).json({message: 'Invalid login'});
-            return;
-        }
-        res.status(201).json({
-            message: "Logged In", data: user
-        });
+        let err;
 
-    } catch (e) {
-        res.status(401).json({message: e.message});
+        successHandler(res, user, 201);
+
+    }catch(e){
+        errorHandler(res, e.statusCode, e.message);
     }
 };

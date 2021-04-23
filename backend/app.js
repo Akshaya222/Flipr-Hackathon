@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser = require('body-parser');
 require('./db/connection');
-// const userRoutes = require('./routes/user');
+const userRoutes = require('./routes/user');
 
 var app = express();
 
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(userRoutes);
+app.use(userRoutes);
 
 // module.exports = app;
 const port = process.env.PORT || 3000;

@@ -9,13 +9,7 @@ const userSchema= new mongoose.Schema({
     },
     password: {
         type: String,
-        minlength: 7,
-        validate(value) {
-            // • be a string, 6 chars, atleast one num, atleast one letter
-            if (value.toLowerCase().includes('password') || value.match(/[a-z]/i) && value.match(/[0-9]/)) {
-                throw new Error('Password must contain atleast 6 char, 1 number and 1 letter');
-            }
-        }
+        minlength: 7
     },
     teamChoosen: {
         type: Boolean,
@@ -23,11 +17,7 @@ const userSchema= new mongoose.Schema({
     },
     phoneNumber: {
         type: Number,
-        validate(value){
-            if (value.length() < 10) {
-                throw new Error('Invalid Phone Number');
-            }
-        }
+        default: null
     },
     currCredits: {
         type: Number,
@@ -38,9 +28,16 @@ const userSchema= new mongoose.Schema({
         default: 100
     },
     token: {
-        type: String
+        type: String,
+        default: null
     }
 });
+
+userSchema.methods.toJSON = function() {
+    var obj = this.toObject(); //or var obj = this;
+    delete obj.password;
+    return obj;
+};   
 
 var User=mongoose.model('User',userSchema);
 module.exports=User;
