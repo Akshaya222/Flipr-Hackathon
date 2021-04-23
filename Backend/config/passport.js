@@ -13,7 +13,7 @@ const options = {
     algorithms: ['RS256']
 };
 
-                                        //verify callback
+//verify callback
 const strategy=new JwtStrategy(options,(payload,done)=>{
    console.log(payload);
      // We will assign the `sub` property on the JWT to the database ID of user

@@ -22,7 +22,7 @@ app.use(passport.initialize());
 //mail("how are you?","18bcs017@iiitdwd.ac.in")
 
 
-app.use('/routes',require('./routes/index'));
+// app.use('/routes',require('./routes/index'));
 
 app.listen(3008,()=>{
     console.log(`server is running on port ${3008}`)
