@@ -4,7 +4,7 @@ const mongoose=require('mongoose');
 const userSchema= new mongoose.Schema({
     username: {
         type: String,
-        unique: true,
+        // unique: true,
         lowercase: true
         // default: null
     },
@@ -12,6 +12,9 @@ const userSchema= new mongoose.Schema({
         type: String,
         minlength: 7
         // default: null
+    },
+    fbID:{
+        type: String
     },
     teamChoosen: {
         type: Boolean,

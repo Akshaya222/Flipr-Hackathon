@@ -6,12 +6,12 @@ exports.auth = async (req, res, next) => {
     try {
         let err;
 
-        const userToken = req.header('Authorization');
+        const token = req.header('Authorization');
 
         // check if token is valid and hasn't expired
-        const decoded = jwt.verify(userToken, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        const user = await User.findOne({userToken});
+        const user = await User.findOne({token});
 
         if (!user){
             err = new Error('Please Register first');
