@@ -23,13 +23,13 @@ exports.sendOTP = async (req, res) => {
         await client.verify.services(`${serviceID}`)
              .verifications
              .create({
-                 to: '+918726905758', channel: 'sms'
+                 to: `+91${phoneNumber}`, channel: 'sms'
                 })
              .then((verification)=> {
                  user['verification'] = verification;
             });
         
-        successHandler(res, user, 201);
+        successHandler(res, user, 200);
 
     }catch(e){
         errorHandler(res, e.statusCode, e.message);
@@ -55,14 +55,14 @@ exports.verifyOTP = async (req, res) => {
         .services(`${serviceID}`)
         .verificationChecks
         .create({
-            to: '+918726905758', code:otp
+            to: `+91${phoneNumber}`, code:otp
         })
         .then((verification)=> {
             user['verification'] = verification;
        });
    
              
-        successHandler(res, user, 201);
+        successHandler(res, user, 200);
 
     }catch(e){
         errorHandler(res, e.statusCode, e.message);
