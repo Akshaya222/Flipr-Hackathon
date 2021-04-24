@@ -110,7 +110,7 @@ exports.signupFB = async (req, res) => {
       err = new Error('Already Registered');
       err.statusCode = 400;
       throw err; 
-    }
+    }Files
 
     req.body = {};
     req.body['fbID'] = fbID; 
