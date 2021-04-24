@@ -5,7 +5,6 @@ const serviceID = process.env.TWILIO_SERVICE_ID;
 const client = require('twilio')(accountSid, authToken);
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const { UserBindingPage } = require('twilio/lib/rest/ipMessaging/v2/service/user/userBinding');
 
 // send otp 
 exports.sendOTP = async (req, res) => {
@@ -20,15 +19,6 @@ exports.sendOTP = async (req, res) => {
             err.statusCode = 400;
             throw err;
         }
-
-        // client.messages
-        // .create({
-        //     body: 'text',
-        //     // url: 'http://demo.twilio.com/docs/voice.xml',
-        //     from: '+18057027077',
-        //     to: '+918726905758',
-        // })
-        // .then(message => console.log(message));
 
         await client.verify.services(`${serviceID}`)
              .verifications
@@ -124,7 +114,6 @@ exports.resetUserPassword = async (req, res) => {
       // hash the new password
       req.body['password'] = await bcrypt.hash(newPassword, 10);
   
-      // api/helpers/update-user-by-id.js
       const updatedUser = await User.findByIdAndUpdate({_id}, req.body, {new:true});
   
       successHandler(res, updatedUser);

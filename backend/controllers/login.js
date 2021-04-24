@@ -93,3 +93,46 @@ exports.loginPhone =  async (req, res) => {
     errorHandler(res, e.statusCode, e.message);
   }
 };
+
+
+// login usin fb id
+exports.loginFB =  async (req, res) => {
+  try{
+    let err;
+
+    const {fbID} = req.body;
+
+    if (!fbID){
+      err = new Error('Missingfields');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    let user = await User.findOne({fbID});
+
+    if (!user) {
+      err = new Error('UserNotFound, register first');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    // generate token
+    const token = jwt.sign({
+      id: user._id
+    }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
+  
+    user = await User.findOneAndUpdate({fbID}, {token},  {new: true});
+
+    if (!user){
+      err = new Error('Failed to update token');
+      err.statusCode = 500;
+      throw err;
+    }
+
+    successHandler(res, user);
+
+  }catch(e){
+    errorHandler(res, e.statusCode, e.message);
+  }
+};
+

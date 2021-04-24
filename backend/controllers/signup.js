@@ -10,7 +10,7 @@ exports.signupUsername = async (req, res) => {
     let err;
     const {username, password} = req.body;
 
-    if (!username.trim() || !password.trim()){
+    if (!username || !password){
       err = new Error('Missing Fields');
       err.statusCode = 400;
       throw err;
@@ -58,7 +58,7 @@ exports.signupPhone = async (req, res) => {
     
     const {phoneNumber} = req.body;
 
-    if (!phoneNumber.trim()){
+    if (!phoneNumber){
       err = new Error('Missing Fields');
       err.statusCode = 400;
       throw err;
@@ -89,3 +89,44 @@ exports.signupPhone = async (req, res) => {
    errorHandler(res, e.statusCode, e.message);
   }
 };
+
+// sign up using phone number
+exports.signupFB = async (req, res) => {
+  try{
+
+    let err;
+    
+    const {fbID} = req.body;
+
+    if (!fbID){
+      err = new Error('Missing Fields');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    const isIdListed = await User.findOne({fbID});
+
+    if (isIdListed){
+      err = new Error('Already Registered');
+      err.statusCode = 400;
+      throw err; 
+    }
+
+    req.body = {};
+    req.body['fbID'] = fbID; 
+
+    const user = await User.create(req.body);
+
+    if (!user){
+      err = new Error('Failed to Register');
+      err.statusCode = 500;
+      throw err;
+    }
+
+    successHandler(res, user, 201);
+
+  }catch(e){
+   errorHandler(res, e.statusCode, e.message);
+  }
+};
+
