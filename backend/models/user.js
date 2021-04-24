@@ -6,18 +6,20 @@ const userSchema= new mongoose.Schema({
         type: String,
         unique: true,
         lowercase: true
+        // default: null
     },
     password: {
         type: String,
         minlength: 7
+        // default: null
     },
     teamChoosen: {
         type: Boolean,
         default: false
     },
     phoneNumber: {
-        type: Number,
-        default: null
+        type: Number
+        // default: null
     },
     currCredits: {
         type: Number,
