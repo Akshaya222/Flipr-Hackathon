@@ -5,25 +5,20 @@ const teamSchema= new mongoose.Schema({
       type: String,
       required: true
     },
-    players: [{
-      playerID: {
-        type: String,
-        required: true
-      },
-      isCaptain: {
-        type: Boolean,
-        default: false
-      },
-      isViceCaptain: {
-        type: String,
-        default: false
-      },
-      totalRuns: {
-        type: Number,
-        default: 0
-      }
-    }]
+    players: [String],
+    captain: {
+      type: String,
+      required: true
+    },
+    viceCaptain: {
+      type: String,
+      required: true
+    },
+    credits: {
+      type: Number,
+      default: 0
+    }
 });
 
 var Team = mongoose.model('Team',teamSchema);
-module.exports = User;
+module.exports = Team;

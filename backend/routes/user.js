@@ -8,7 +8,8 @@ const {
 const {
   sendOTP,
   verifyOTP,
-  resetUserPassword
+  resetUserPassword,
+  createTeam
 } = require('../controllers/user');
 const { auth } = require('../helpers/middlerwares/isLoggedIn');
 const {
@@ -30,5 +31,6 @@ router.put('/api/login-fb', loginFB);
 router.put('/api/reset-password/:userID', auth, resetUserPassword);
 router.post('/api/send-otp', sendOTP);
 router.post('/api/verify-otp', verifyOTP);
+router.post('/api/create-team/:userID', auth, createTeam)
 
 module.exports = router;
