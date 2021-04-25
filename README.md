@@ -7,13 +7,13 @@ demo video : https://drive.google.com/file/d/1AlUH9iwScNH6jW35r3YyHCQkueKR-mN1/v
 
 For backend
 Go to backend directory and do 
-npm install
-npx nodemon app.is
+to install node modules : npm install
+to run : npx nodemon app.is
 
 to run react app
 cd frontend
-npm install
-npm start
+to install node modules : npm install
+to run: npm start
 
 
 
