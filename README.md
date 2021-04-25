@@ -12,6 +12,8 @@ cd frontend
 npm install
 npm start
 
+demo video : https://drive.google.com/file/d/1AlUH9iwScNH6jW35r3YyHCQkueKR-mN1/view
+
 
 
 
