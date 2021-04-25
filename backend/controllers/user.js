@@ -170,7 +170,17 @@ exports.createTeam = async (req, res) => {
             throw err;
         }
 
-        successHandler(res, team, 201);
+        const all_teams = await Team.find({userID: _id});
+        console.log(all_teams);
+
+        if (!all_teams){
+            err = new Error('Failed to fetch teams');
+            err.statusCode = 500;
+            throw err;
+        }
+
+
+        successHandler(res, all_teams, 201);
 
     }catch(e){
         errorHandler(res, e.statusCode, e.message);
