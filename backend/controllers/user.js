@@ -4,6 +4,7 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const serviceID = process.env.TWILIO_SERVICE_ID;
 const client = require('twilio')(accountSid, authToken);
 const User = require('../models/user');
+const Team = require('../models/teams');
 const bcrypt = require('bcrypt');
 
 // send otp 
@@ -124,3 +125,60 @@ exports.resetUserPassword = async (req, res) => {
   
   };
   
+// create team
+exports.createTeam = async (req, res) => {
+    try{
+
+        let err;
+
+        const _id = req.params.userID;
+
+        const {players, captain, viceCaptain, credits} = req.body;
+
+        if(!_id || !players || players.length===0 || !captain || !viceCaptain || !credits){
+            err = new Error('Missing Fields');
+            err.statusCode = 400;
+            throw err;
+        }
+
+        if (players.length !== 11){
+            err = new Error('Please add 11 players strictly');
+            err.statusCode = 400;
+            throw err;
+        }
+        
+        if (!players.includes(captain) || !players.includes(viceCaptain)){
+            err = new Error('Captain and Vice Captain should be from choosen players');
+            err.statusCode = 400;
+            throw err;
+        }
+
+        const user = await User.findById({_id});
+
+        if (!user){
+            err = new Error('Invalid User ID');
+            err.statusCode = 400;
+            throw err;
+        }
+
+        req.body = {};
+        req.body['userID'] = _id;
+        req.body['players'] = players;
+        req.body['captain'] = captain;
+        req.body['viceCaptain'] = viceCaptain;
+        req.body['credits'] = credits;
+
+        const team = await Team.create(req.body);
+
+        if (!team){
+            err = new Error('Failed to create team');
+            err.statusCode = 500;
+            throw err;
+        }
+
+        successHandler(res, team, 201);
+
+    }catch(e){
+        errorHandler(res, e.statusCode, e.message);
+    }
+};
