@@ -133,9 +133,9 @@ exports.createTeam = async (req, res) => {
 
         const _id = req.params.userID;
 
-        const {players, captain, viceCaptain, credits} = req.body;
+        const {players, credits} = req.body;
 
-        if(!_id || !players || players.length===0 || !captain || !viceCaptain || !credits){
+        if(!_id || !players || players.length===0 || !credits){
             err = new Error('Missing Fields');
             err.statusCode = 400;
             throw err;
@@ -147,12 +147,6 @@ exports.createTeam = async (req, res) => {
             throw err;
         }
         
-        if (!players.includes(captain) || !players.includes(viceCaptain)){
-            err = new Error('Captain and Vice Captain should be from choosen players');
-            err.statusCode = 400;
-            throw err;
-        }
-
         const user = await User.findById({_id});
 
         if (!user){
@@ -164,8 +158,6 @@ exports.createTeam = async (req, res) => {
         req.body = {};
         req.body['userID'] = _id;
         req.body['players'] = players;
-        req.body['captain'] = captain;
-        req.body['viceCaptain'] = viceCaptain;
         req.body['credits'] = credits;
 
         const team = await Team.create(req.body);
