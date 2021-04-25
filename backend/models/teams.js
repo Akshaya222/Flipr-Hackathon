@@ -6,14 +6,6 @@ const teamSchema= new mongoose.Schema({
       required: true
     },
     players: [String],
-    captain: {
-      type: String,
-      required: true
-    },
-    viceCaptain: {
-      type: String,
-      required: true
-    },
     credits: {
       type: Number,
       default: 0

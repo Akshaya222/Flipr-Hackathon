@@ -16,10 +16,6 @@ const userSchema= new mongoose.Schema({
     fbID:{
         type: String
     },
-    teamChoosen: {
-        type: Boolean,
-        default: false
-    },
     phoneNumber: {
         type: Number
         // default: null
