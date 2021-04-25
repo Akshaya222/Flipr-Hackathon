@@ -133,9 +133,9 @@ exports.createTeam = async (req, res) => {
 
         const _id = req.params.userID;
 
-        const {players, credits} = req.body;
+        const {players, team1, team2, credits} = req.body;
 
-        if(!_id || !players || players.length===0 || !credits){
+        if(!_id || !players || players.length===0 || !team1 || !team2 || !credits){
             err = new Error('Missing Fields');
             err.statusCode = 400;
             throw err;
@@ -158,6 +158,8 @@ exports.createTeam = async (req, res) => {
         req.body = {};
         req.body['userID'] = _id;
         req.body['players'] = players;
+        req.body['team1'] = team1;
+        req.body['team2'] = team2;
         req.body['credits'] = credits;
 
         const team = await Team.create(req.body);
