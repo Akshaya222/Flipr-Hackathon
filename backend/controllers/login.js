@@ -11,7 +11,7 @@ exports.loginUsername =  async (req, res) => {
     const {username, password} = req.body;
 
     if (!username || !password){
-      err = new Error('Missingfields');
+      err = new Error('Missing fields');
       err.statusCode = 400;
       throw err;
     }
@@ -19,15 +19,15 @@ exports.loginUsername =  async (req, res) => {
     let user = await User.findOne({username});
 
     if (!user) {
-      err = new Error('UserNotFound');
-      err.statusCode = 400;
+      err = new Error('User Not Found');
+      err.statusCode = 404;
       throw err;
     }
 
     const isPassMatched = await bcrypt.compare(`${password}`,`${user.password}`);
 
     if (!isPassMatched){
-      err = new Error('IncorrectPassword');
+      err = new Error('Incorrect Password');
       err.statusCode = 400;
       throw err;
     }
@@ -61,7 +61,7 @@ exports.loginPhone =  async (req, res) => {
     const {phoneNumber} = req.body;
 
     if (!phoneNumber){
-      err = new Error('Missingfields');
+      err = new Error('Missing fields');
       err.statusCode = 400;
       throw err;
     }
@@ -69,7 +69,7 @@ exports.loginPhone =  async (req, res) => {
     let user = await User.findOne({phoneNumber});
 
     if (!user) {
-      err = new Error('UserNotFound');
+      err = new Error('User Not Found');
       err.statusCode = 400;
       throw err;
     }
@@ -103,7 +103,7 @@ exports.loginFB =  async (req, res) => {
     const {fbID} = req.body;
 
     if (!fbID){
-      err = new Error('Missingfields');
+      err = new Error('Missing fields');
       err.statusCode = 400;
       throw err;
     }
@@ -111,9 +111,17 @@ exports.loginFB =  async (req, res) => {
     let user = await User.findOne({fbID});
 
     if (!user) {
-      err = new Error('UserNotFound, register first');
-      err.statusCode = 400;
-      throw err;
+      req.body = {};
+      req.body['fbID'] = fbID; 
+  
+      const user = await User.create(req.body);
+  
+      if (!user){
+        err = new Error('Failed to Register');
+        err.statusCode = 500;
+        throw err;
+      }
+  
     }
 
     // generate token
@@ -129,7 +137,7 @@ exports.loginFB =  async (req, res) => {
       throw err;
     }
 
-    successHandler(res, user);
+    successHandler(res, user,201);
 
   }catch(e){
     errorHandler(res, e.statusCode, e.message);

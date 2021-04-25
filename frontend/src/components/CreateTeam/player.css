@@ -1,0 +1,73 @@
+.main{
+    background: -webkit-linear-gradient(left, #a7a8be, #1d1e64);
+    width:1200px;
+    margin:0;
+    min-height: 100vh!important;
+    display: flex;
+    justify-content: center;
+}
+
+.container{
+    height: 70px; position: relative;
+    width: 65%;
+    height: 70px;
+    background-color: #0559AD;
+    margin-top: 40px;
+    border-radius: 5px;
+    box-shadow: 5px 10px 8px  #1a1212;
+}
+
+.left-board{
+    width: 50%;height: 30px!important;
+    float: left;
+    background-color: #72b1f0;
+    border-radius: 5%;
+    margin-top: 2%;
+    margin-left: 1%;
+    box-shadow: 5px 10px 8px  #1a1212;
+}
+.player-name{
+    width: 40%; height: 20px; margin: 0px;
+    padding: 6px;
+}
+.right-board{
+    float: right;
+    width: 40%;height: 40px;
+    background-color: #72b1f0;
+    border-radius: 5%;
+    margin-top: 1%;
+    margin-right: 1%;
+    box-shadow: 5px 10px 8px  #1a1212;
+    
+    
+  }
+  
+  .baller{
+    font-family: 'Anton',sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    float: right;
+    margin-right: 30px;
+    margin-bottom: 1%;
+    line-height: 2;
+    margin-top: 2%;
+    display: flex;
+  }
+  .button {
+    background-color: #72b1f0;
+    border: none;
+    font-family: 'Anton',sans-serif;
+    font-weight: 700;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    height: 30px;
+    box-shadow: 5px 10px 8px  #1a1212;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    
+  }

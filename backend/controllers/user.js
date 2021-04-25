@@ -6,21 +6,16 @@ const client = require('twilio')(accountSid, authToken);
 const User = require('../models/user');
 const Team = require('../models/teams');
 const bcrypt = require('bcrypt');
-
 // send otp 
 exports.sendOTP = async (req, res) => {
     try{
-
         let err, user={};
-
         const {phoneNumber} = req.body;
-
         if(!phoneNumber){
             err = new Error('Missing Fields');
             err.statusCode = 400;
             throw err;
         }
-
         await client.verify.services(`${serviceID}`)
              .verifications
              .create({
@@ -31,26 +26,20 @@ exports.sendOTP = async (req, res) => {
             });
         
         successHandler(res, user, 200);
-
     }catch(e){
         errorHandler(res, e.statusCode, e.message);
     }
 };
-
 // verify otp 
 exports.verifyOTP = async (req, res) => {
     try{
-
         let err, user={};
-
         const {otp, phoneNumber} = req.body;
-
         if(!otp || !phoneNumber){
             err = new Error('Missing Fields');
             err.statusCode = 400;
             throw err;
         }
-
         await client
         .verify
         .services(`${serviceID}`)
@@ -64,15 +53,12 @@ exports.verifyOTP = async (req, res) => {
    
              
         successHandler(res, user, 200);
-
     }catch(e){
         errorHandler(res, e.statusCode, e.message);
     }
 };
-
 // reset user password in db
 exports.resetUserPassword = async (req, res) => {
-
     try{
   
       let err;
@@ -88,7 +74,6 @@ exports.resetUserPassword = async (req, res) => {
       }
   
       const user = await User.findById({_id});
-
       if (!user){
           err = new Error('Invalid user ID');
           err.statusCode = 400;
@@ -128,19 +113,17 @@ exports.resetUserPassword = async (req, res) => {
 // create team
 exports.createTeam = async (req, res) => {
     try{
-
         let err;
 
         const _id = req.params.userID;
 
         const {players, team1, team2, credits} = req.body;
-
+        console.log(req.body)
         if(!_id || !players || players.length===0 || !team1 || !team2 || !credits){
             err = new Error('Missing Fields');
             err.statusCode = 400;
             throw err;
         }
-
         if (players.length !== 11){
             err = new Error('Please add 11 players strictly');
             err.statusCode = 400;
@@ -148,13 +131,11 @@ exports.createTeam = async (req, res) => {
         }
         
         const user = await User.findById({_id});
-
         if (!user){
             err = new Error('Invalid User ID');
             err.statusCode = 400;
             throw err;
         }
-
         req.body = {};
         req.body['userID'] = _id;
         req.body['players'] = players;
@@ -181,8 +162,8 @@ exports.createTeam = async (req, res) => {
 
 
         successHandler(res, all_teams, 201);
-
-    }catch(e){
-        errorHandler(res, e.statusCode, e.message);
     }
-};
+    catch(e){
+      errorHandler(res, e.statusCode, e.message);
+} 
+}

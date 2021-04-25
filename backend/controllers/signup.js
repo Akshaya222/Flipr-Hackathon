@@ -8,9 +8,9 @@ exports.signupUsername = async (req, res) => {
   try{
 
     let err;
-    const {username, password} = req.body;
+    const {name,username, password} = req.body;
 
-    if (!username || !password){
+    if (!username || !password || !name){
       err = new Error('Missing Fields');
       err.statusCode = 400;
       throw err;
@@ -33,6 +33,7 @@ exports.signupUsername = async (req, res) => {
     req.body = {}
     req.body['username'] =  username;
     req.body['password'] = await bcrypt.hash(password, 10);
+    req.body['name']=name;
 
     const user = await User.create(req.body);
 

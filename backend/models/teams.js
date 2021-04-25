@@ -1,11 +1,10 @@
 const mongoose=require('mongoose');
-
 const teamSchema= new mongoose.Schema({
     userID: {
       type: String,
       required: true
     },
-    players: [String],
+    players: [{}],
     team1: {
       type: String,
       required: true
@@ -19,6 +18,5 @@ const teamSchema= new mongoose.Schema({
       default: 0
     }
 });
-
 var Team = mongoose.model('Team',teamSchema);
 module.exports = Team;
