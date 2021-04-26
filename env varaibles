@@ -1,7 +1,0 @@
-PORT=3007
-dbUrl="mongodb+srv://Akshaya:RYfGBHpTFdzsigPW@cluster0.jng7v.mongodb.net/Hackathon?retryWrites=true&w=majority"
-TWILIO_ACCOUNT_SID="ACf522171d963fddbe7a741cd5ed209562"
-TWILIO_AUTH_TOKEN="2518c5a5746ad309d3af2841e3ac62e2"
-TWILIO_SERVICE_ID="VAb394c1c61c3cd72a98c1e6d346583791"
-JWT_SECRET="mysecret"
-JWT_EXPIRES_IN="10d"
